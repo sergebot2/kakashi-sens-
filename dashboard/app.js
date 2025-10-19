@@ -327,4 +327,5 @@ function validateEmail(email) {
 
 function convertSize(byte) {
 	return byte > 1024 ? byte > 1024 * 1024 ? (byte / 1024 / 1024).toFixed(2) + " MB" : (byte / 1024).toFixed(2) + " KB" : byte + " Byte";
-          }
+}
+
