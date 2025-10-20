@@ -1,68 +1,77 @@
+// ╔═══════════════════════════════════════╗
+// 🔥👑 COMMANDE APPSTORE ENCADRÉE - DARK / ROYAL / INFERNAL 👑🔥
+// Auteur : Octavio Wina
+// Version : 1.3
+// Description : Recherche et affiche les apps sur l'App Store avec style
+// ╚═══════════════════════════════════════╝
+
 const itunes = require("searchitunes");
 const { getStreamFromURL } = global.utils;
 
 module.exports = {
-	config: {
-		name: "appstore",
-		version: "1.2",
-		author: "NTKhang",
-		countDown: 5,
-		role: 0,
-		description: {
-			vi: "Tìm app trên appstore",
-			en: "Search app on appstore"
-		},
-		category: "software",
-		guide: "   {pn}: <keyword>"
-			+ "\n   - Example:"
-			+ "\n   {pn} PUBG",
-		envConfig: {
-			limitResult: 3
-		}
-	},
+  config: {
+    name: "appstore",
+    version: "1.3",
+    author: "Octavio Wina",
+    countDown: 5,
+    role: 0,
+    description: {
+      fr: "Recherche une application sur l'App Store et l'affiche dans un style encadré"
+    },
+    category: "software",
+    guide: "╔══ 🔍 UTILISATION 🔍 ══╗\n" +
+           "• {pn} <mot-clé>\n" +
+           "• Exemple : {pn} PUBG\n" +
+           "╚═══════════════════════╝",
+    envConfig: {
+      limitResult: 3
+    }
+  },
 
-	langs: {
-		vi: {
-			missingKeyword: "Bạn chưa nhập từ khóa",
-			noResult: "Không tìm thấy kết quả nào cho từ khóa %1"
-		},
-		en: {
-			missingKeyword: "You haven't entered any keyword",
-			noResult: "No result found for keyword %1"
-		}
-	},
+  langs: {
+    fr: {
+      missingKeyword: "⚠️ | Vous n'avez pas entré de mot-clé",
+      noResult: "❌ | Aucun résultat trouvé pour le mot-clé : %1"
+    }
+  },
 
-	onStart: async function ({ message, args, commandName, envCommands, getLang }) {
-		if (!args[0])
-			return message.reply(getLang("missingKeyword"));
-		let results = [];
-		try {
-			results = (await itunes({
-				entity: "software",
-				country: "VN",
-				term: args.join(" "),
-				limit: envCommands[commandName].limitResult
-			})).results;
-		}
-		catch (err) {
-			return message.reply(getLang("noResult", args.join(" ")));
-		}
+  onStart: async function ({ message, args, commandName, envCommands, getLang }) {
+    if (!args[0])
+      return message.reply(getLang("missingKeyword"));
 
-		if (results.length > 0) {
-			let msg = "";
-			const pedningImages = [];
-			for (const result of results) {
-				msg += `\n\n- ${result.trackCensoredName} by ${result.artistName}, ${result.formattedPrice} and rated ${"🌟".repeat(result.averageUserRating)} (${result.averageUserRating.toFixed(1)}/5)`
-					+ `\n- ${result.trackViewUrl}`;
-				pedningImages.push(await getStreamFromURL(result.artworkUrl512 || result.artworkUrl100 || result.artworkUrl60));
-			}
-			message.reply({
-				body: msg,
-				attachment: await Promise.all(pedningImages)
-			});
-		}
-		else {
-			message.reply(getLang("noResult", args.join(" ")));
-		}
-	}
+    let results = [];
+    try {
+      results = (await itunes({
+        entity: "software",
+        country: "VN",
+        term: args.join(" "),
+        limit: envCommands[commandName].limitResult
+      })).results;
+    }
+    catch (err) {
+      return message.reply(getLang("noResult", args.join(" ")));
+    }
+
+    if (results.length > 0) {
+      const attachments = [];
+      let msg = "👑🔥 Résultats AppStore :\n";
+
+      for (const result of results) {
+        // Construire un mini-cadré Dark / Royal
+        msg += "╔══════════════════════╗\n";
+        msg += `• Nom : ${result.trackCensoredName}\n`;
+        msg += `• Auteur : ${result.artistName}\n`;
+        msg += `• Prix : ${result.formattedPrice}\n`;
+        msg += `• Note : ${"🌟".repeat(Math.round(result.averageUserRating || 0))} (${(result.averageUserRating || 0).toFixed(1)}/5)\n`;
+        msg += `• Lien : ${result.trackViewUrl}\n`;
+        msg += "╚══════════════════════╝\n";
+        attachments.push(await getStreamFromURL(result.artworkUrl512 || result.artworkUrl100 || result.artworkUrl60));
+      }
+
+      message.reply({ body: msg, attachment: await Promise.all(attachments) });
+    }
+    else {
+      message.reply(getLang("noResult", args.join(" ")));
+    }
+  }
 };
