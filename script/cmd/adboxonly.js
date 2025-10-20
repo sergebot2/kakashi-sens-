@@ -1,38 +1,72 @@
 module.exports = {
 	config: {
 		name: "onlyadminbox",
-		aliases: ["onlyadbox", "adboxonly", "adminboxonly"],
-		version: "1.3",
-		author: "NTKhang",
+		aliases: ["adminbox", "adbox", "onlyadbox"],
+		version: "1.4",
+		author: "Octavio wina",
 		countDown: 5,
 		role: 1,
 		description: {
-			vi: "bật/tắt chế độ chỉ quản trị của viên nhóm mới có thể sử dụng bot",
-			en: "turn on/off only admin box can use bot"
+			fr: "Active ou désactive le mode où seuls les administrateurs du groupe peuvent utiliser le bot",
+			en: "Turn on/off admin-only mode for group"
 		},
-		category: "box chat",
+		category: "gestion de groupe",
 		guide: {
-			vi: "   {pn} [on | off]: bật/tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot"
-				+ "\n   {pn} noti [on | off]: bật/tắt thông báo khi người dùng không phải là quản trị viên nhóm sử dụng bot",
-			en: "   {pn} [on | off]: turn on/off the mode only admin of group can use bot"
-				+ "\n   {pn} noti [on | off]: turn on/off the notification when user is not admin of group use bot"
+			fr: "   {pn} [on | off] : Active ou désactive le mode administrateur uniquement.\n"
+				+ "   {pn} noti [on | off] : Active ou désactive les notifications pour les non-admins.",
+			en: "   {pn} [on | off]: Enable/disable admin-only mode.\n"
+				+ "   {pn} noti [on | off]: Enable/disable notification when non-admin uses the bot."
 		}
 	},
 
 	langs: {
-		vi: {
-			turnedOn: "Đã bật chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot",
-			turnedOff: "Đã tắt chế độ chỉ quản trị viên nhóm mới có thể sử dụng bot",
-			turnedOnNoti: "Đã bật thông báo khi người dùng không phải là quản trị viên nhóm sử dụng bot",
-			turnedOffNoti: "Đã tắt thông báo khi người dùng không phải là quản trị viên nhóm sử dụng bot",
-			syntaxError: "Sai cú pháp, chỉ có thể dùng {pn} on hoặc {pn} off"
+		fr: {
+			turnedOn:
+`╔═══════════════════✦⚜️✦═══════════════════╗
+║ 🔥 𝗠𝗢𝗗𝗘 𝗔𝗗𝗠𝗜𝗡 𝗔𝗖𝗧𝗜𝗩𝗘́ 🔥
+╠═════════════════════════════════════╣
+║ ✅ Seuls les administrateurs du groupe peuvent
+║ désormais utiliser le bot.
+╚═══════════════════✦⚜️✦═══════════════════╝`,
+
+			turnedOff:
+`╔═══════════════════✦❄️✦═══════════════════╗
+║ 👥 𝗠𝗢𝗗𝗘 𝗔𝗗𝗠𝗜𝗡 𝗗𝗘́𝗦𝗔𝗖𝗧𝗜𝗩𝗘́ 👥
+╠═════════════════════════════════════╣
+║ 🌍 Tous les membres du groupe peuvent à présent
+║ utiliser le bot librement.
+╚═══════════════════✦❄️✦═══════════════════╝`,
+
+			turnedOnNoti:
+`╔═══════════════════✦🔔✦═══════════════════╗
+║ 📢 𝗡𝗢𝗧𝗜𝗙𝗜𝗖𝗔𝗧𝗜𝗢𝗡𝗦 𝗔𝗖𝗧𝗜𝗩𝗘́𝗘𝗦 📢
+╠═════════════════════════════════════╣
+║ 🔔 Les membres non-admin recevront une alerte
+║ lorsqu’ils tenteront d’utiliser le bot.
+╚═══════════════════✦🔔✦═══════════════════╝`,
+
+			turnedOffNoti:
+`╔═══════════════════✦🔕✦═══════════════════╗
+║ 🤫 𝗡𝗢𝗧𝗜𝗙𝗜𝗖𝗔𝗧𝗜𝗢𝗡𝗦 𝗗𝗘́𝗦𝗔𝗖𝗧𝗜𝗩𝗘́𝗘𝗦 🤫
+╠═════════════════════════════════════╣
+║ 🔇 Aucun message ne sera envoyé aux non-admins.
+╚═══════════════════✦🔕✦═══════════════════╝`,
+
+			syntaxError:
+`╔═══════════════════✦⚠️✦═══════════════════╗
+║ ⚠️ 𝗘𝗥𝗥𝗘𝗨𝗥 𝗗𝗘 𝗦𝗬𝗡𝗧𝗔𝗫𝗘 ⚠️
+╠═════════════════════════════════════╣
+║ Utilisation correcte :
+║ ➤ {pn} on / off
+║ ➤ {pn} noti on / off
+╚═══════════════════✦⚠️✦═══════════════════╝`
 		},
 		en: {
-			turnedOn: "Turned on the mode only admin of group can use bot",
-			turnedOff: "Turned off the mode only admin of group can use bot",
-			turnedOnNoti: "Turned on the notification when user is not admin of group use bot",
-			turnedOffNoti: "Turned off the notification when user is not admin of group use bot",
-			syntaxError: "Syntax error, only use {pn} on or {pn} off"
+			turnedOn: "Admin mode activated. Only admins can use the bot.",
+			turnedOff: "Admin mode disabled. Everyone can use the bot now.",
+			turnedOnNoti: "Notification for non-admins turned on.",
+			turnedOffNoti: "Notification for non-admins turned off.",
+			syntaxError: "Syntax error, use {pn} on/off or {pn} noti on/off"
 		}
 	},
 
@@ -58,8 +92,8 @@ module.exports = {
 		await threadsData.set(event.threadID, isSetNoti ? !value : value, keySetData);
 
 		if (isSetNoti)
-			return message.reply(value ? getLang("turnedOnNoti") : getLang("turnedOffNoti"));
+			return message.reply(getLang(value ? "turnedOnNoti" : "turnedOffNoti"));
 		else
-			return message.reply(value ? getLang("turnedOn") : getLang("turnedOff"));
+			return message.reply(getLang(value ? "turnedOn" : "turnedOff"));
 	}
 };
